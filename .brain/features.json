@@ -1,0 +1,47 @@
+{
+  "modules": {
+    "auth_oauth": {
+      "status": "active",
+      "description": "Quản lý kết nối xác thực tài khoản AI qua OAuth và Device Code Flow.",
+      "features": [
+        {
+          "name": "Kiro AWS SSO Import Auto-Detect",
+          "status": "Implemented",
+          "description": "Tự động phân tích AWS SSO cache để lấy client credentials."
+        },
+        {
+          "name": "Kiro Social Login UI",
+          "status": "Implemented",
+          "description": "Hiển thị các tùy chọn đăng nhập mạng xã hội Google, GitHub."
+        }
+      ]
+    },
+    "routing_core": {
+      "status": "active",
+      "description": "Nhận diện định dạng, dịch request/response và xử lý streaming.",
+      "features": [
+        {
+          "name": "Combo Fallback Routing",
+          "status": "Implemented",
+          "description": "Chuyển tiếp tuần tự qua danh sách model khi gặp lỗi."
+        },
+        {
+          "name": "Claude 4.6/4.7 Support",
+          "status": "Implemented",
+          "description": "Thêm model Opus mới cùng chế độ suy nghĩ và ghi chia nhỏ."
+        }
+      ]
+    },
+    "persistence": {
+      "status": "active",
+      "description": "Lưu trữ cấu hình cục bộ và ghi log usage.",
+      "features": [
+        {
+          "name": "SQLite Fallback DB Driver",
+          "status": "Implemented",
+          "description": "Hệ thống driver 3 tầng để tối ưu tương thích SQLite."
+        }
+      ]
+    }
+  }
+}

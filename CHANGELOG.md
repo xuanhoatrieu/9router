@@ -1,3 +1,13 @@
+# Unreleased
+
+## Features
+- Kiro OAuth: Add AWS SSO cache integration (`~/.aws/sso/cache`) to automatically resolve client ID, client secret, region, and start URL when importing tokens.
+- Kiro OAuth: Enable Google and GitHub social login methods in KiroAuthModal UI.
+- Models: Add Claude Opus 4.6 and Claude Opus 4.7 model definitions with Thinking and Agentic variants in `providerModels.js`.
+
+## Improvements
+- Config: Force default port 20128 for production start script in `package.json`.
+
 # v0.4.63 (2026-05-26)
 
 ## Fixes

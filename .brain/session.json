@@ -1,0 +1,78 @@
+{
+  "working_on": {
+    "feature": "Kiro OAuth & Claude Models",
+    "task": "Tích hợp AWS SSO cache & Mở khóa social login buttons & Claude Opus 4.6/4.7",
+    "status": "In Progress (Locally Modified)",
+    "files": [
+      "open-sse/config/providerModels.js",
+      "package.json",
+      "src/app/api/oauth/kiro/import/route.js",
+      "src/lib/oauth/services/kiro.js",
+      "src/shared/components/KiroAuthModal.js"
+    ]
+  },
+  "pending_tasks": [
+    {
+      "priority": "high",
+      "task": "Test luồng import token Kiro với SSO Cache để xác nhận hoạt động ổn định."
+    },
+    {
+      "priority": "medium",
+      "task": "Verify các model Claude Opus 4.6/4.7 mới được định tuyến chính xác."
+    },
+    {
+      "priority": "low",
+      "task": "Commit và push các thay đổi sau khi kiểm thử thành công."
+    }
+  ],
+  "recent_changes": [
+    {
+      "change": "Thiết lập thành công dịch vụ hệ thống chạy ngầm ở chế độ production (systemd --user 9router.service) trên port 20128.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Viết kịch bản tự động cập nhật repo gốc thông minh (auto-update.sh) tích hợp kiểm tra an toàn thay đổi chưa commit và tự động build/restart service.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Cấu hình systemd timer (9router-updater.timer) để tự động hóa kiểm tra cập nhật repo mỗi 1 ngày.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Bổ sung cơ chế quét AWS SSO Cache (~/.aws/sso/cache) để tự động hóa điền thông tin Client credentials khi import token Kiro.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Cập nhật API /api/oauth/kiro/import để hỗ trợ nhận diện và lưu trữ thông tin AWS SSO, Region, và authMethod mới.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Hiển thị lại các nút đăng nhập qua Google và GitHub trong KiroAuthModal UI.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Khai báo các model Claude Opus 4.6 và Opus 4.7 với các biến thể Thinking và Agentic trong providerModels.js.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Chỉnh sửa script start trong package.json để mặc định chạy port 20128.",
+      "date": "2026-05-27"
+    },
+    {
+      "change": "Cập nhật CHANGELOG.md với phần Unreleased ghi nhận toàn bộ cải tiến trên.",
+      "date": "2026-05-27"
+    }
+  ],
+  "decisions_made": [
+    {
+      "decision": "Sử dụng giải pháp đọc thủ công thư mục ~/.aws/sso/cache thay vì chạy lệnh AWS CLI để đảm bảo độc lập nền tảng.",
+      "reason": "Giúp việc import chạy tốt ngay cả trên các môi trường không cài đặt sẵn AWS CLI hoặc trong các sandbox."
+    },
+    {
+      "decision": "Triển khai dịch vụ chạy ngầm và bộ lập lịch bằng Systemd User Service & User Timer thay vì PM2 hay Cron.",
+      "reason": "Systemd User Mode hoạt động hoàn hảo dưới quyền user hiện tại, không yêu cầu sudo/root, tin cậy tuyệt đối, tích hợp sẵn journald logging."
+    }
+  ],
+  "skipped_tests": [],
+  "updated_at": "2026-05-27T22:17:50Z"
+}

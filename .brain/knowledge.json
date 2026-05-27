@@ -1,0 +1,38 @@
+{
+  "decisions": [
+    {
+      "decision": "Tự động phân tích thư mục cache AWS SSO (~/.aws/sso/cache) để tự động điền thông tin client (ID, secret, region) khi user nhập Kiro refresh token.",
+      "reason": "Giảm tải gánh nặng cấu hình thủ công cho user và giúp trải nghiệm import mượt mà hơn."
+    },
+    {
+      "decision": "Mở khóa nút Google và GitHub Social Login trong giao diện KiroAuthModal.",
+      "reason": "Cung cấp thêm tùy chọn đăng nhập mạng xã hội thay vì chỉ nhập token thủ công."
+    },
+    {
+      "decision": "Bổ sung cấu hình Claude Opus 4.6 và Opus 4.7 với các biến thể Thinking & Agentic.",
+      "reason": "Đáp ứng nhu cầu chạy tác vụ lập trình phức tạp dài hơi không bị timeout từ client."
+    }
+  ],
+  "patterns": [
+    {
+      "pattern": "Đọc cache file JSON từ hệ thống để trích xuất thông tin liên kết chéo",
+      "example": "Đọc tệp client metadata trong `.aws/sso/cache` qua hash ID của client."
+    }
+  ],
+  "gotchas": [
+    {
+      "issue": "Kiro token import bị lỗi do thiếu thông tin OAuth Client (clientId/clientSecret).",
+      "solution": "Tự động tìm kiếm trong cache của AWS CLI (~/.aws/sso/cache) để map tự động."
+    },
+    {
+      "issue": "Timeout khi ghi file lớn với Kiro (2-3 phút giới hạn).",
+      "solution": "Sử dụng biến thể model dạng `-agentic` để kích hoạt chunked-write prompt."
+    }
+  ],
+  "conventions": {
+    "model_suffixes": {
+      "-thinking": "Kích hoạt chế độ suy nghĩ của model thông qua system prompt.",
+      "-agentic": "Kích hoạt prompt ghi chunk để tránh timeout."
+    }
+  }
+}

@@ -34,9 +34,13 @@ export async function POST(request) {
       expiresAt: new Date(Date.now() + tokenData.expiresIn * 1000).toISOString(),
       email: email || null,
       providerSpecificData: {
-        profileArn: tokenData.profileArn,
-        authMethod: "imported",
-        provider: "Imported",
+        profileArn: tokenData.profileArn || null,
+        authMethod: tokenData.authMethod || "imported",
+        clientId: tokenData.clientId || null,
+        clientSecret: tokenData.clientSecret || null,
+        region: tokenData.region || "us-east-1",
+        startUrl: tokenData.startUrl || null,
+        provider: tokenData.authMethod === "idc" ? "Identity Center" : (tokenData.authMethod === "builder-id" ? "Builder ID" : "Imported"),
       },
       testStatus: "active",
     });

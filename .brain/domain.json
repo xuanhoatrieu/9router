@@ -1,0 +1,19 @@
+{
+  "org_info": {
+    "name": "Decolua",
+    "description": "Phát triển các giải pháp và công cụ hỗ trợ lập trình thông minh"
+  },
+  "domain_terms": {
+    "routing_gateway": "Cổng định tuyến trung gian tiếp nhận yêu cầu tương thích OpenAI và chuyển tiếp tới các upstream AI phù hợp.",
+    "combo_models": "Luồng định tuyến tuần tự chạy qua các model đã cấu hình nếu model trước đó bị lỗi hoặc quá tải (fallback).",
+    "provider_connection": "Cấu hình tài khoản hoặc API key của từng nhà cung cấp AI (Kiro, Codex, Claude, Gemini, v.v.).",
+    "token_refresh": "Cơ chế tự động làm mới access token dựa trên refresh token khi phát hiện token hết hạn hoặc gặp lỗi 401/403.",
+    "aws_sso_cache": "Thư mục lưu trữ credentials tạm thời của AWS CLI tại ~/.aws/sso/cache giúp tự động trích xuất cấu hình OAuth."
+  },
+  "workflows": {
+    "kiro_oauth_import": "User nhập refresh token -> Quét AWS SSO cache -> Trích xuất clientId, clientSecret, region, startUrl -> Tự động xác thực và lưu kết nối."
+  },
+  "validation_rules": {
+    "token_prefix": "Kiro refresh token bắt đầu bằng tiền tố aorAAAAAG..."
+  }
+}

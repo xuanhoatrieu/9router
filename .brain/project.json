@@ -1,0 +1,45 @@
+{
+  "project": {
+    "name": "9router-app",
+    "type": "Next.js Web App",
+    "status": "In Development",
+    "last_saved": "2026-05-27T22:13:30Z",
+    "save_count": 1
+  },
+  "tech_stack": {
+    "frontend": {
+      "framework": "Next.js (v16)",
+      "styling": "TailwindCSS v4",
+      "state_management": "Zustand"
+    },
+    "backend": {
+      "framework": "Next.js App Router",
+      "runtime": "Node.js / Bun"
+    },
+    "database": {
+      "type": "SQLite (better-sqlite3 / sql.js / node:sqlite fallback)"
+    }
+  },
+  "infrastructure": {
+    "servers": [
+      {
+        "name": "Local Development",
+        "host": "localhost",
+        "port": 20128
+      }
+    ],
+    "database": {
+      "type": "SQLite / Local JSON fallback"
+    },
+    "physical_storage_files": [
+      "${DATA_DIR}/db.json",
+      "~/.9router/usage.json",
+      "~/.9router/log.txt"
+    ]
+  },
+  "github": {
+    "repo_url": "https://github.com/xuanhoatrieu/9router",
+    "default_branch": "master",
+    "commit_rule": "LUÔN HỎI TRƯỚC KHI COMMIT"
+  }
+}

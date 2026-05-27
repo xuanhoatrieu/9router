@@ -1,4 +1,8 @@
 import { KIRO_CONFIG } from "../constants/oauth.js";
+import fs from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
+
 
 /**
  * Kiro OAuth Service
@@ -230,6 +234,53 @@ export class KiroService {
   }
 
   /**
+   * Search AWS SSO cache to find matching client details for the refresh token
+   */
+  async findSSOCacheForToken(refreshToken) {
+    try {
+      const cachePath = join(homedir(), ".aws/sso/cache");
+      const files = await fs.promises.readdir(cachePath);
+
+      // Look for kiro-auth-token-cli.json or any json file with this refreshToken
+      for (const file of files) {
+        if (!file.endsWith(".json")) continue;
+        try {
+          const content = await fs.promises.readFile(join(cachePath, file), "utf-8");
+          const data = JSON.parse(content);
+          if (data.refreshToken === refreshToken) {
+            const region = data.region || "us-east-1";
+            const startUrl = data.startUrl || "https://view.awsapps.com/start";
+            const authMethod = data.authMethod === "IdC" ? "idc" : "builder-id";
+            const clientIdHash = data.clientIdHash;
+
+            if (clientIdHash) {
+              const clientFile = `${clientIdHash}.json`;
+              if (files.includes(clientFile)) {
+                const clientContent = await fs.promises.readFile(join(cachePath, clientFile), "utf-8");
+                const clientData = JSON.parse(clientContent);
+                if (clientData.clientId && clientData.clientSecret) {
+                  return {
+                    clientId: clientData.clientId,
+                    clientSecret: clientData.clientSecret,
+                    region,
+                    startUrl,
+                    authMethod,
+                  };
+                }
+              }
+            }
+          }
+        } catch (e) {
+          // Skip file read errors
+        }
+      }
+    } catch (e) {
+      // SSO directory might not exist or be readable
+    }
+    return null;
+  }
+
+  /**
    * Validate and import refresh token
    */
   async validateImportToken(refreshToken) {
@@ -238,15 +289,22 @@ export class KiroService {
       throw new Error("Invalid token format. Token should start with aorAAAAAG...");
     }
 
+    // Try to auto-detect AWS SSO cache
+    const ssoCache = await this.findSSOCacheForToken(refreshToken);
+
     // Try to refresh to validate
     try {
-      const result = await this.refreshToken(refreshToken);
+      const result = await this.refreshToken(refreshToken, ssoCache || {});
       return {
         accessToken: result.accessToken,
         refreshToken: result.refreshToken || refreshToken,
         profileArn: result.profileArn,
         expiresIn: result.expiresIn,
-        authMethod: "imported",
+        authMethod: ssoCache ? ssoCache.authMethod : "imported",
+        clientId: ssoCache?.clientId || null,
+        clientSecret: ssoCache?.clientSecret || null,
+        region: ssoCache?.region || "us-east-1",
+        startUrl: ssoCache?.startUrl || null,
       };
     } catch (error) {
       throw new Error(`Token validation failed: ${error.message}`);
