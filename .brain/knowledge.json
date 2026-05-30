@@ -11,6 +11,10 @@
     {
       "decision": "Bổ sung cấu hình Claude Opus 4.6 và Opus 4.7 với các biến thể Thinking & Agentic.",
       "reason": "Đáp ứng nhu cầu chạy tác vụ lập trình phức tạp dài hơi không bị timeout từ client."
+    },
+    {
+      "decision": "Bổ sung cấu hình Claude Opus 4.8 với các biến thể Thinking & Agentic cho Kiro.",
+      "reason": "Hỗ trợ phiên bản model mạnh mẽ nhất của Claude Code vừa được Kiro/AWS CodeWhisperer ra mắt."
     }
   ],
   "patterns": [

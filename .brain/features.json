@@ -26,7 +26,7 @@
           "description": "Chuyển tiếp tuần tự qua danh sách model khi gặp lỗi."
         },
         {
-          "name": "Claude 4.6/4.7 Support",
+          "name": "Claude 4.6/4.7/4.8 Support",
           "status": "Implemented",
           "description": "Thêm model Opus mới cùng chế độ suy nghĩ và ghi chia nhỏ."
         }
